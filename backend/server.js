@@ -11,13 +11,14 @@
  */
 
 import express from 'express';
+import cors from 'cors';
 import graphQLHTTP from 'express-graphql';
 import path from 'path';
 import webpack from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';
 import {schema} from './data/schema';
 
-const APP_PORT = 3000;
+const APP_PORT = 3030;
 
 // Serve the Relay app
 const compiler = webpack({
@@ -47,6 +48,9 @@ const app = new WebpackDevServer(compiler, {
   publicPath: '/js/',
   stats: {colors: true},
 });
+
+// enable permissive CORS settings
+app.use(cors());
 
 // Serve static resources
 app.use('/', express.static(path.resolve(__dirname, 'public')));
