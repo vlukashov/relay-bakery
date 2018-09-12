@@ -22,3 +22,6 @@ yarn-error.log*
 
 # ahead-of-time compiled Relay queries
 __generated__
+
+# generated from src/data by the `schema` npm script
+/data

@@ -11,10 +11,10 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import fs from 'fs';
-import path from 'path';
-import { schema } from '../data/schema';
-import { printSchema } from 'graphql';
+const fs = require('fs');
+const path = require('path');
+const { schema } = require('../data/schema');
+const { printSchema } = require('graphql');
 
 const schemaPath = path.resolve(__dirname, '../data/schema.graphql');
 

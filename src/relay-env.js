@@ -9,7 +9,7 @@ function fetchQuery(
   operation,
   variables,
 ) {
-  const url = new URL("http://localhost:3030/graphql");
+  const url = new URL("/graphql", window.location.origin);
   const params = {
     query: operation.text,
     variables: JSON.stringify(variables),
