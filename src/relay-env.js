@@ -9,14 +9,16 @@ function fetchQuery(
   operation,
   variables,
 ) {
-  const url = new URL("/graphql", window.location.origin);
-  const params = {
-    query: operation.text,
-    variables: JSON.stringify(variables),
-  };
-  Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
-
-  return fetch(url).then(response => {
+  return fetch('/graphql', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json; charset=utf-8',
+    },
+    body: JSON.stringify({
+      query: operation.text,
+      variables,
+    }),
+  }).then(response => {
     return response.json();
   });
 }

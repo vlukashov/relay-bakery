@@ -1,16 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {graphql, createFragmentContainer} from 'react-relay';
 
+import ChangeTodoStatusMutation from '../mutations/ChangeTodoStatusMutation';
 
 class Todo extends React.Component {
-  static propTypes = {
-    todo: PropTypes.shape({
-      complete: PropTypes.boolean,
-      text: PropTypes.string,
-    }),
-  }
-
   render() {
     const {complete, text} = this.props.todo;
 
@@ -20,12 +13,22 @@ class Todo extends React.Component {
           <input
             checked={complete}
             type="checkbox"
+            onChange={this._handleCompleteChange}
           />
           <label>
             {text}
           </label>
         </div>
       </li>
+    );
+  }
+
+  _handleCompleteChange = (event) => {
+    const complete = event.target.checked;
+    ChangeTodoStatusMutation.commit(
+      this.props.relay.environment,
+      complete,
+      this.props.todo,
     );
   }
 }
@@ -35,6 +38,7 @@ export default createFragmentContainer(
   graphql`
     # As a convention, we name the fragment as '<ComponentFileName>_<propName>'
     fragment Todo_todo on Todo {
+      id
       complete
       text
     }
