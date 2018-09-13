@@ -1,30 +1,49 @@
 import {
   Environment,
-  Network,
   RecordSource,
   Store,
 } from 'relay-runtime';
 
-function fetchQuery(
-  operation,
-  variables,
-) {
-  return fetch('/graphql', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json; charset=utf-8',
-    },
-    body: JSON.stringify({
-      query: operation.text,
-      variables,
+import {
+  RelayNetworkLayer,
+  urlMiddleware,
+  loggerMiddleware,
+  perfMiddleware,
+  retryMiddleware,
+  cacheMiddleware,
+  progressMiddleware,
+} from 'react-relay-network-modern/es';
+
+const network = new RelayNetworkLayer(
+  [
+    cacheMiddleware({
+      size: 100, // max 100 requests
+      ttl: 900000, // 15 minutes
     }),
-  }).then(response => {
-    return response.json();
-  });
-}
+    urlMiddleware({
+      url: req => Promise.resolve('/graphql'),
+    }),
+    loggerMiddleware(),
+    perfMiddleware(),
+    retryMiddleware({
+      fetchTimeout: 15000,
+      retryDelays: attempt => Math.pow(2, attempt + 4) * 100, // or simple array [3200, 6400, 12800, 25600, 51200, 102400, 204800, 409600],
+      forceRetry: (cb, delay) => {
+        window.forceRelayRetry = cb;
+        console.log('call `forceRelayRetry()` for immediately retry! Or wait ' + delay + ' ms.');
+      },
+      statusCodes: [500, 503, 504],
+    }),
+    progressMiddleware({
+      onProgress: (current, total) => {
+        console.log('Downloaded: ' + current + ' B, total: ' + total + ' B');
+      },
+    }),
+  ]
+);
 
 const environment = new Environment({
-  network: Network.create(fetchQuery),
+  network: network,
   store: new Store(new RecordSource()),
 });
 

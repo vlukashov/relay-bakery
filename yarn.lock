@@ -349,7 +349,7 @@ axobject-query@^0.1.0:
   dependencies:
     ast-types-flow "0.0.7"
 
-babel-cli@^6.26.0:
+babel-cli@6.26.0:
   version "6.26.0"
   resolved "https://registry.yarnpkg.com/babel-cli/-/babel-cli-6.26.0.tgz#502ab54874d7db88ad00b887a06383ce03d002f1"
   dependencies:
@@ -5723,6 +5723,10 @@ react-dom@^16.5.0:
 react-error-overlay@^4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-4.0.1.tgz#417addb0814a90f3a7082eacba7cee588d00da89"
+
+react-relay-network-modern@^2.3.4:
+  version "2.3.4"
+  resolved "https://registry.yarnpkg.com/react-relay-network-modern/-/react-relay-network-modern-2.3.4.tgz#a921d724ac336cd6e3945f0fd48633f9966757ed"
 
 react-relay@1.5.0:
   version "1.5.0"
