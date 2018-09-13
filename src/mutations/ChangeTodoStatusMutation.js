@@ -25,6 +25,14 @@ function commit(
       variables: {
         input: {complete, id: todo.id},
       },
+      optimisticResponse: {
+        changeTodoStatus: {
+          todo: {
+            id: todo.id,
+            complete: complete,
+          }
+        }
+      }
     }
   );
 }
