@@ -21,7 +21,7 @@ const network = new RelayNetworkLayer(
       ttl: 900000, // 15 minutes
     }),
     urlMiddleware({
-      url: req => Promise.resolve('__RELAY_API_ENDPOINT__'),
+      url: req => Promise.resolve('http://localhost:60000/relay/v1/cjm0jfuyj000401527ycvcx3n'),
     }),
     loggerMiddleware(),
     perfMiddleware(),

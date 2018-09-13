@@ -3,9 +3,20 @@
 
 In the project directory, you can run:
 
+### `npm run graphcool:up`
+
+Starts a local graphcool server (requires Docker)
+
+### `npm run graphcool`
+
+Re-deploys the schema to the local graphcool server (which needs to be started earlier by `npm run graphcool:up`)
+
+
 ### `npm run relay`
 
-Pre-compiles the relay queries used in the app. Run this before starting the app.
+Refreshes the graphql schema from the local graphcool server (saves it into ./schema.graphql). Then pre-compiles the relay queries used in the app. Run this before starting the app.
+
+Before running this command make sure the local graphcool server is up and running the most recent version of the schema (see `npm run graphcool`)
 
 ### `npm start`
 
@@ -31,4 +42,6 @@ Your app is ready to be deployed!
 
 ### This is a 'Create React App' project
 
-This project was bootstrapped with [Create React App] v1.1.5(https://github.com/facebookincubator/create-react-app).
+This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app) v1.1.5.
+
+A [Graphcool + Relay quickstart project](https://www.graph.cool/docs/quickstart/frontend/react/relay-sot2faez6a) was copied over into the CRA project structure.

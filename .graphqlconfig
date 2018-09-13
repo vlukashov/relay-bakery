@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "relay-crud": {
+      "schemaPath": "schema.graphql",
+      "extensions": {
+        "endpoints": {
+          "dev": {
+            "url": "http://localhost:60000/relay/v1/cjm0jfuyj000401527ycvcx3n",
+            "subscription": "ws://localhost:60000/subscriptions/v1/cjm0jfuyj000401527ycvcx3n"
+          }
+        }
+      }
+    }
+  }
+}

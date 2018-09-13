@@ -22,6 +22,7 @@ let tempID = 0;
 export default function CreatePostMutation(description, imageUrl, viewerId, callback) {
   const variables = {
     input: {
+      authorId: 'cjm0jyhp3002j015264t17k8d',
       description,
       imageUrl,
       clientMutationId: ""
