@@ -1,35 +1,27 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import {graphql, QueryRenderer} from 'react-relay';
 import logo from './logo.svg';
 import './App.css';
+import TodoList from './components/TodoList';
 
 import environment from './relay-env';
 
 class UserTodoList extends React.Component {
-  static propTypes = {
-    userID: PropTypes.string
-  }
-
-  static defaultProps = {
-    // 'VXNlcjptZQ==' is base64 for 'User:me', which is defined in data/database.js
-    userID: 'VXNlcjptZQ=='
-  }
-
   render() {
-    const {userID} = this.props;
-
     return (
       <QueryRenderer
         environment={environment}
         query={graphql`
-          query App_UserQuery($userID: ID!) {
-            node(id: $userID) {
-              id
+          query App_ViewerQuery {
+            viewer {
+              id,
+              # Reference the fragment defined in the TodoList component
+              # (it would be nice avoid re-typing a string constant here)
+              ...TodoList_userTodoData
             }
           }
         `}
-        variables={{userID}}
+        variables={{}}
         render={({error, props}) => {
           if (error) {
             return <div>Error!</div>;
@@ -37,7 +29,12 @@ class UserTodoList extends React.Component {
           if (!props) {
             return <div>Loading...</div>;
           }
-          return <div>User ID: {props.node.id}</div>;
+          return (
+            <div>
+              <div>Todo list for User {props.viewer.id}:</div>
+              <TodoList userTodoData={props.viewer} />
+            </div>
+          );
         }}
       />
     );
