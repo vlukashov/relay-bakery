@@ -21,7 +21,7 @@ const network = new RelayNetworkLayer(
       ttl: 900000, // 15 minutes
     }),
     urlMiddleware({
-      url: req => Promise.resolve('/graphql'),
+      url: req => Promise.resolve('__RELAY_API_ENDPOINT__'),
     }),
     loggerMiddleware(),
     perfMiddleware(),
