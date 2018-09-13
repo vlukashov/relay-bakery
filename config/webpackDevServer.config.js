@@ -95,9 +95,15 @@ module.exports = function(proxy, allowedHost) {
       app.use(noopServiceWorkerMiddleware());
 
       // Setup GraphQL endpoint
-      app.use('/graphql', graphQLHTTP({
+      app.get('/graphql', graphQLHTTP({
         schema: schema,
         pretty: true,
+        graphiql: true
+      }));
+
+      app.post('/graphql', graphQLHTTP({
+        schema: schema,
+        pretty: true
       }));
     },
   };
