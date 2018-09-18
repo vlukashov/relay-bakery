@@ -5,6 +5,7 @@ import {
 } from 'react-relay'
 
 import Order from './Order';
+import InfiniteScrollPageLoader from './InfiniteScrollPageLoader';
 
 class StorefrontPage extends React.Component {
   render() {
@@ -13,9 +14,7 @@ class StorefrontPage extends React.Component {
         {this.props.viewer.allOrders.edges.map(({node}) =>
           <Order key={node.id} order={node}/>
         )}
-        <button
-          onClick={() => this._loadMore()}
-          title="Load More">Load more</button>
+        <InfiniteScrollPageLoader onLoadMore={() => this._loadMore()}/>
       </div>
     )
   }
