@@ -17,7 +17,7 @@ const HomeQuery = graphql`
 class Home extends Component {
   render() {
     const filter = {
-      dueDate_gte: new Date()
+      dueDate_gte: new Date().toISOString()
     };
 
     return (
