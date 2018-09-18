@@ -19,8 +19,17 @@ class StorefrontPage extends React.Component {
 }
 
 export default createFragmentContainer(StorefrontPage, graphql`
-  fragment StorefrontPage_viewer on Viewer {
-    allOrders(last: 100, orderBy: dueDate_ASC) @connection(key: "Storefront_allOrders", filters: []) {
+  fragment StorefrontPage_viewer on Viewer @argumentDefinitions(
+    filter: {type: "OrderFilter"}
+  ) {
+    allOrders(
+      first: 10,
+      orderBy: dueDate_ASC,
+      filter: $filter
+    ) @connection(
+      key: "Storefront_allOrders",
+      filters: ["filter"]
+    ) {
       edges {
         node {
           id,
