@@ -1,84 +1,60 @@
 import React from 'react'
 import {
-  createPaginationContainer,
+  createRefetchContainer,
   graphql
 } from 'react-relay'
+import debounce from 'lodash/debounce';
 
-import Order from './Order';
-import InfiniteScrollPageLoader from './InfiniteScrollPageLoader';
+import OrderList from './OrderList';
 
 class StorefrontPage extends React.Component {
+  constructor(props) {
+    super(props);
+    this._onFilterChanged = debounce(this._onFilterChanged.bind(this), 300);
+  }
+
   render() {
     return (
-      <div>
-        {this.props.viewer.allOrders.edges.map(({node}) =>
-          <Order key={node.id} order={node}/>
-        )}
-        <InfiniteScrollPageLoader onLoadMore={() => this._loadMore()}/>
+      <div className="StorefrontPage">
+        <div>
+          <label>
+            Filter
+            <input type="text" onChange={(e) => this._onFilterChanged(e.target.value)} />
+          </label>
+        </div>
+        <OrderList viewer={this.props.viewer}/>
       </div>
     )
   }
 
-  _loadMore() {
-    if (!this.props.relay.hasMore() || this.props.relay.isLoading()) {
-      return;
-    }
-
-    this.props.relay.loadMore(
-      10,  // Fetch the next 10 feed items
-      error => {
-        console.log(error);
-      },
-    );
+  _onFilterChanged(filterString) {
+    this.props.relay.refetch(fragmentVariables => {
+      return {
+        filter: {
+          ...fragmentVariables.filter,
+          customer: {
+            fullName_contains: filterString
+          }
+        }
+      };
+    });
   }
 }
 
-export default createPaginationContainer(StorefrontPage,
+export default createRefetchContainer(StorefrontPage,
   graphql`
     fragment StorefrontPage_viewer on Viewer @argumentDefinitions(
-      count: {type: "Int", defaultValue: 10},
-      cursor: {type: "String", defaultValue: null},
       filter: {type: "OrderFilter"}
     ) {
-      allOrders(
-        first: $count,
-        after: $cursor,
-        orderBy: dueDate_ASC,
-        filter: $filter
-      ) @connection(
-        key: "Storefront_allOrders",
-        filters: ["filter"]
-      ) {
-        edges {
-          node {
-            id,
-            ...Order_order
-          }
-        }
-      }
+      ...OrderList_viewer @arguments(filter: $filter)
     }
   `,
-  {
-    direction: 'forward',
-    query: graphql`
-      # Pagination query to be fetched upon calling loadMore().
-      # Notice that we re-use our fragment, and the shape of this query matches
-      # our fragment spec.
-      query StorefrontPage_Pagination_Query(
-        $count: Int!,
-        $cursor: String!,
-        $filter: OrderFilter!
-      ) {
-        viewer {
-          ...StorefrontPage_viewer @arguments(count: $count, cursor: $cursor, filter: $filter)
-        }
-      }
-    `,
-    getVariables: (props, paginationInfo, fragmentVariables) => {
-      return {
-        count: paginationInfo.count,
-        cursor: paginationInfo.cursor,
-        filter: fragmentVariables.filter
+  graphql`
+    # Refetch query to be fetched upon calling 'refetch'.
+    # Notice that we re-use our fragment and the shape of this query matches our fragment spec.
+    query StorefrontPage_Refetch_Query($filter: OrderFilter) {
+      viewer {
+        ...OrderList_viewer @arguments(filter: $filter)
       }
     }
-  });
+  `);
