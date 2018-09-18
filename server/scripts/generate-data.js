@@ -342,7 +342,7 @@ function createOrder(productSupplier, pickupLocationSupplier, barista, baker, du
   };
 
   order.customer = {
-    fullName: getRandomArrayItem(FIRST_NAME) + getRandomArrayItem(LAST_NAME),
+    fullName: getRandomArrayItem(FIRST_NAME) + ' ' + getRandomArrayItem(LAST_NAME),
     phoneNumber: getRandomPhoneNumber()
   };
 

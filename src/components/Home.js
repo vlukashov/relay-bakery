@@ -4,12 +4,12 @@ import {
   graphql
 } from 'react-relay'
 import environment from '../relay-env'
-import ListPage from './ListPage'
+import StorefrontPage from './StorefrontPage'
 
-const HomeAllPostQuery = graphql`
-  query HomeAllPostQuery {
+const HomeQuery = graphql`
+  query Home_Query {
     viewer {
-      ...ListPage_viewer
+      ...StorefrontPage_viewer
     }
   }
 `
@@ -20,12 +20,12 @@ class Home extends Component {
       <div>
         <QueryRenderer
           environment={environment}
-          query={HomeAllPostQuery}
+          query={HomeQuery}
           render={({error, props}) => {
             if (error) {
               return <div>{error.message}</div>
             } else if (props) {
-              return <ListPage viewer={props.viewer} />
+              return <StorefrontPage viewer={props.viewer} />
             }
             return <div>Loading</div>
           }}

@@ -64,7 +64,7 @@
     "graphcool:reset": "cd server && node -e \"(async () => {try {await require('./scripts/reset-db')();} catch (e) {console.log(e);}})();\"",
     "graphcool:generate": "cd server && node scripts/generate-data.js",
     "graphcool": "cd server && graphcool deploy",
-    "relay": "graphql get-schema && relay-compiler --src ./src --schema ./schema.graphql --extensions js jsx"
+    "relay": "graphql get-schema -p relay-crud && relay-compiler --src ./src --schema ./schema.graphql --extensions js jsx"
   },
   "jest": {
     "collectCoverageFrom": [
