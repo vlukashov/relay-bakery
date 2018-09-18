@@ -1,3 +1,5 @@
 targets:
   dev: local/cjm0jfuyj000401527ycvcx3n
   default: dev
+platformToken: >-
+  eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzcyNTI1MzYsImNsaWVudElkIjoiY2ptMGo5MndxMDAwMDAxNTJoOWs1Y3kzeSIsInByb2plY3RJZCI6ImNqbTBqZnV5ajAwMDQwMTUyN3ljdmN4M24iLCJwZXJtYW5lbnRBdXRoVG9rZW5JZCI6ImNqbTdjZ3c2YzIwbHEwMTUyYW9iMGdpbzAifQ.lk91kZ5xE5IZbxsIALoK8BR02i_Rbrmg2ghnWt64H20

@@ -1,25 +1,73 @@
-# The following types define the data model of the example service
-# based on which the GraphQL API is generated
+enum OrderState {
+  CANCELLED
+  CONFIRMED
+  DELIVERED
+  NEW
+  PROBLEM
+  READY
+}
+
+type Order @model {
+  id: ID! @isUnique
+  state: OrderState!
+  customer: Customer! @relation(name: "CustomerOrders")
+  dueDate: DateTime!
+  history: [HistoryItem!]! @relation(name: "OrderHistoryItems")
+  items: [OrderItem!]! @relation(name: "OrderItems")
+  pickupLocation: PickupLocation! @relation(name: "OrderPickupLocation")
+}
+
+type Customer @model {
+  id: ID! @isUnique
+  fullName: String!
+  phoneNumber: String
+  details: String
+
+  orders: [Order!]! @relation(name: "CustomerOrders")
+}
+
+type HistoryItem @model {
+  id: ID! @isUnique
+  timestamp: DateTime!
+  newState: OrderState!
+  createdBy: User! @relation(name: "UserHistoryItems")
+  message: String
+
+  order: Order! @relation(name: "OrderHistoryItems")
+}
 
 type User @model {
   id: ID! @isUnique
-  name: String
-  dateOfBirth: DateTime
+  email: String!
+  firstName: String
+  lastName: String
+  role: String!
+  locked: Boolean!
 
-  # Uncomment below - you can declare relations between models like this
-
-  posts: [Post!]! @relation(name: "UserPosts")
+  historyItems: [HistoryItem!]! @relation(name: "UserHistoryItems")
 }
 
-
-# Uncomment the model below as well
-
-type Post @model {
+type OrderItem @model {
   id: ID! @isUnique
-  description: String
-  createdAt: DateTime!
-  imageUrl: String
+  product: Product! @relation(name: "ProductOrderItems")
+  quantity: Int!
+  totalPrice: Int!
+  comment: String
 
-  # Every relation also required a back-relation (to determine 1:1, 1:n or n:m)
-  author: User! @relation(name: "UserPosts")
+  order: Order! @relation(name: "OrderItems")
+}
+
+type Product @model {
+  id: ID! @isUnique
+  name: String!
+  price: Int!
+
+  orderItems: [OrderItem!]! @relation(name: "ProductOrderItems")
+}
+
+type PickupLocation @model {
+  id: ID! @isUnique
+  name: String!
+
+  orders: [Order!]! @relation(name: "OrderPickupLocation")
 }

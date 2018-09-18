@@ -1,49 +1,266 @@
 # source: http://localhost:60000/relay/v1/cjm0jfuyj000401527ycvcx3n
-# timestamp: Thu Sep 13 2018 16:29:47 GMT+0300 (EEST)
+# timestamp: Tue Sep 18 2018 10:17:15 GMT+0300 (EEST)
 
-type AddToUserPostsPayload {
+input AddToCustomerOrdersOrderInput {
+  customerCustomerId: ID!
+  ordersOrderId: ID!
+  clientMutationId: String!
+}
+
+type AddToCustomerOrdersPayload {
   viewer: Viewer!
   clientMutationId: String!
-  authorUser: User
-  postsPost: Post
-  authorUserEdge: UserEdge
-  postsPostEdge: PostEdge
+  ordersOrder: Order
+  customerCustomer: Customer
+  ordersOrderEdge: OrderEdge
+  customerCustomerEdge: CustomerEdge
 }
 
-input AddToUserPostsUserInput {
-  postsPostId: ID!
-  authorUserId: ID!
+input AddToOrderHistoryItemsOrderInput {
+  historyHistoryItemId: ID!
+  orderOrderId: ID!
   clientMutationId: String!
 }
 
-input CreatePost {
-  description: String
-  imageUrl: String
-  authorId: ID
-  author: PostauthorUser
-}
-
-input CreatePostInput {
-  description: String
-  imageUrl: String
-  authorId: ID
-  author: PostauthorUser
-  clientMutationId: String!
-}
-
-type CreatePostPayload {
+type AddToOrderHistoryItemsPayload {
   viewer: Viewer!
   clientMutationId: String!
-  post: Post
-  edge: PostEdge
-  author: User
+  orderOrder: Order
+  historyHistoryItem: HistoryItem
+  orderOrderEdge: OrderEdge
+  historyHistoryItemEdge: HistoryItemEdge
+}
+
+input AddToOrderItemsOrderInput {
+  itemsOrderItemId: ID!
+  orderOrderId: ID!
+  clientMutationId: String!
+}
+
+type AddToOrderItemsPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  orderOrder: Order
+  itemsOrderItem: OrderItem
+  orderOrderEdge: OrderEdge
+  itemsOrderItemEdge: OrderItemEdge
+}
+
+input AddToOrderPickupLocationOrderInput {
+  pickupLocationPickupLocationId: ID!
+  ordersOrderId: ID!
+  clientMutationId: String!
+}
+
+type AddToOrderPickupLocationPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  ordersOrder: Order
+  pickupLocationPickupLocation: PickupLocation
+  ordersOrderEdge: OrderEdge
+  pickupLocationPickupLocationEdge: PickupLocationEdge
+}
+
+input AddToProductOrderItemsOrderItemInput {
+  productProductId: ID!
+  orderItemsOrderItemId: ID!
+  clientMutationId: String!
+}
+
+type AddToProductOrderItemsPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  orderItemsOrderItem: OrderItem
+  productProduct: Product
+  orderItemsOrderItemEdge: OrderItemEdge
+  productProductEdge: ProductEdge
+}
+
+input AddToUserHistoryItemsHistoryItemInput {
+  createdByUserId: ID!
+  historyItemsHistoryItemId: ID!
+  clientMutationId: String!
+}
+
+type AddToUserHistoryItemsPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  historyItemsHistoryItem: HistoryItem
+  createdByUser: User
+  historyItemsHistoryItemEdge: HistoryItemEdge
+  createdByUserEdge: UserEdge
+}
+
+input CreateCustomer {
+  details: String
+  fullName: String!
+  phoneNumber: String
+  ordersIds: [ID!]
+  orders: [CustomerordersOrder!]
+}
+
+input CreateCustomerInput {
+  details: String
+  fullName: String!
+  phoneNumber: String
+  ordersIds: [ID!]
+  orders: [CustomerordersOrder!]
+  clientMutationId: String!
+}
+
+type CreateCustomerPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  customer: Customer
+  edge: CustomerEdge
+}
+
+input CreateHistoryItem {
+  message: String
+  newState: OrderState!
+  timestamp: DateTime!
+  createdById: ID
+  createdBy: HistoryItemcreatedByUser
+  orderId: ID
+  order: HistoryItemorderOrder
+}
+
+input CreateHistoryItemInput {
+  message: String
+  newState: OrderState!
+  timestamp: DateTime!
+  createdById: ID
+  createdBy: HistoryItemcreatedByUser
+  orderId: ID
+  order: HistoryItemorderOrder
+  clientMutationId: String!
+}
+
+type CreateHistoryItemPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  historyItem: HistoryItem
+  edge: HistoryItemEdge
+  createdBy: User
+  order: Order
+}
+
+input CreateOrder {
+  dueDate: DateTime!
+  state: OrderState!
+  customerId: ID
+  customer: OrdercustomerCustomer
+  pickupLocationId: ID
+  pickupLocation: OrderpickupLocationPickupLocation
+  historyIds: [ID!]
+  history: [OrderhistoryHistoryItem!]
+  itemsIds: [ID!]
+  items: [OrderitemsOrderItem!]
+}
+
+input CreateOrderInput {
+  dueDate: DateTime!
+  state: OrderState!
+  customerId: ID
+  customer: OrdercustomerCustomer
+  pickupLocationId: ID
+  pickupLocation: OrderpickupLocationPickupLocation
+  historyIds: [ID!]
+  history: [OrderhistoryHistoryItem!]
+  itemsIds: [ID!]
+  items: [OrderitemsOrderItem!]
+  clientMutationId: String!
+}
+
+input CreateOrderItem {
+  comment: String
+  quantity: Int!
+  totalPrice: Int!
+  orderId: ID
+  order: OrderItemorderOrder
+  productId: ID
+  product: OrderItemproductProduct
+}
+
+input CreateOrderItemInput {
+  comment: String
+  quantity: Int!
+  totalPrice: Int!
+  orderId: ID
+  order: OrderItemorderOrder
+  productId: ID
+  product: OrderItemproductProduct
+  clientMutationId: String!
+}
+
+type CreateOrderItemPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  orderItem: OrderItem
+  edge: OrderItemEdge
+  order: Order
+  product: Product
+}
+
+type CreateOrderPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  order: Order
+  edge: OrderEdge
+  customer: Customer
+  pickupLocation: PickupLocation
+}
+
+input CreatePickupLocation {
+  name: String!
+  ordersIds: [ID!]
+  orders: [PickupLocationordersOrder!]
+}
+
+input CreatePickupLocationInput {
+  name: String!
+  ordersIds: [ID!]
+  orders: [PickupLocationordersOrder!]
+  clientMutationId: String!
+}
+
+type CreatePickupLocationPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  pickupLocation: PickupLocation
+  edge: PickupLocationEdge
+}
+
+input CreateProduct {
+  name: String!
+  price: Int!
+  orderItemsIds: [ID!]
+  orderItems: [ProductorderItemsOrderItem!]
+}
+
+input CreateProductInput {
+  name: String!
+  price: Int!
+  orderItemsIds: [ID!]
+  orderItems: [ProductorderItemsOrderItem!]
+  clientMutationId: String!
+}
+
+type CreateProductPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  product: Product
+  edge: ProductEdge
 }
 
 input CreateUser {
-  name: String
-  dateOfBirth: DateTime
-  postsIds: [ID!]
-  posts: [UserpostsPost!]
+  email: String!
+  firstName: String
+  lastName: String
+  locked: Boolean!
+  role: String!
+  historyItemsIds: [ID!]
+  historyItems: [UserhistoryItemsHistoryItem!]
 }
 
 """
@@ -55,110 +272,121 @@ type CreateUserPayload {
   viewer: Viewer!
 }
 
-scalar DateTime
-
-input DeletePostInput {
+type Customer implements Node {
+  details: String
+  fullName: String!
   id: ID!
-  clientMutationId: String!
-}
-
-type DeletePostPayload {
-  viewer: Viewer!
-  clientMutationId: String!
-  post: Post
-  edge: PostEdge
-  author: User
-  deletedId: ID
-}
-
-input DeleteUserInput {
-  id: ID!
-  clientMutationId: String!
-}
-
-type DeleteUserPayload {
-  viewer: Viewer!
-  clientMutationId: String!
-  user: User
-  edge: UserEdge
-  deletedId: ID
-}
-
-type Mutation {
-  createPost(input: CreatePostInput!): CreatePostPayload
-  updatePost(input: UpdatePostInput!): UpdatePostPayload
-  updateUser(input: UpdateUserInput!): UpdateUserPayload
-  updateOrCreatePost(input: UpdateOrCreatePostInput!): UpdateOrCreatePostPayload
-  updateOrCreateUser(input: UpdateOrCreateUserInput!): UpdateOrCreateUserPayload
-  deletePost(input: DeletePostInput!): DeletePostPayload
-  deleteUser(input: DeleteUserInput!): DeleteUserPayload
-  addToUserPosts(input: AddToUserPostsUserInput!): AddToUserPostsPayload
-  createUser(input: SignupUserInput!): CreateUserPayload!
-}
-
-"""An object with an ID"""
-interface Node {
-  """The id of the object."""
-  id: ID!
-}
-
-"""Information about pagination in a connection."""
-type PageInfo {
-  """When paginating forwards, are there more items?"""
-  hasNextPage: Boolean!
-
-  """When paginating backwards, are there more items?"""
-  hasPreviousPage: Boolean!
-
-  """When paginating backwards, the cursor to continue."""
-  startCursor: String
-
-  """When paginating forwards, the cursor to continue."""
-  endCursor: String
-}
-
-type Post implements Node {
-  id: ID!
-  author(filter: UserFilter): User!
-  description: String
-  createdAt: DateTime!
-  imageUrl: String
-}
-
-input PostauthorUser {
-  name: String
-  dateOfBirth: DateTime
-  postsIds: [ID!]
-  posts: [UserpostsPost!]
+  orders(filter: OrderFilter, orderBy: OrderOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): OrderConnection
+  phoneNumber: String
 }
 
 """A connection to a list of items."""
-type PostConnection {
+type CustomerConnection {
   """Information to aid in pagination."""
   pageInfo: PageInfo!
 
   """A list of edges."""
-  edges: [PostEdge]
+  edges: [CustomerEdge]
 
   """Count of filtered result set without considering pagination arguments"""
   count: Int!
 }
 
 """An edge in a connection."""
-type PostEdge {
+type CustomerEdge {
   """The item at the end of the edge."""
-  node: Post!
+  node: Customer!
 
   """A cursor for use in pagination."""
   cursor: String!
 }
 
-input PostFilter {
+input CustomerFilter {
   """Logical AND on all given filters."""
-  AND: [PostFilter!]
+  AND: [CustomerFilter!]
 
   """Logical OR on all given filters."""
-  OR: [PostFilter!]
+  OR: [CustomerFilter!]
+  details: String
+
+  """All values that are not equal to given value."""
+  details_not: String
+
+  """All values that are contained in given list."""
+  details_in: [String!]
+
+  """All values that are not contained in given list."""
+  details_not_in: [String!]
+
+  """All values less than the given value."""
+  details_lt: String
+
+  """All values less than or equal the given value."""
+  details_lte: String
+
+  """All values greater than the given value."""
+  details_gt: String
+
+  """All values greater than or equal the given value."""
+  details_gte: String
+
+  """All values containing the given string."""
+  details_contains: String
+
+  """All values not containing the given string."""
+  details_not_contains: String
+
+  """All values starting with the given string."""
+  details_starts_with: String
+
+  """All values not starting with the given string."""
+  details_not_starts_with: String
+
+  """All values ending with the given string."""
+  details_ends_with: String
+
+  """All values not ending with the given string."""
+  details_not_ends_with: String
+  fullName: String
+
+  """All values that are not equal to given value."""
+  fullName_not: String
+
+  """All values that are contained in given list."""
+  fullName_in: [String!]
+
+  """All values that are not contained in given list."""
+  fullName_not_in: [String!]
+
+  """All values less than the given value."""
+  fullName_lt: String
+
+  """All values less than or equal the given value."""
+  fullName_lte: String
+
+  """All values greater than the given value."""
+  fullName_gt: String
+
+  """All values greater than or equal the given value."""
+  fullName_gte: String
+
+  """All values containing the given string."""
+  fullName_contains: String
+
+  """All values not containing the given string."""
+  fullName_not_contains: String
+
+  """All values starting with the given string."""
+  fullName_starts_with: String
+
+  """All values not starting with the given string."""
+  fullName_not_starts_with: String
+
+  """All values ending with the given string."""
+  fullName_ends_with: String
+
+  """All values not ending with the given string."""
+  fullName_not_ends_with: String
   id: ID
 
   """All values that are not equal to given value."""
@@ -199,250 +427,851 @@ input PostFilter {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
-  description: String
+  phoneNumber: String
 
   """All values that are not equal to given value."""
-  description_not: String
+  phoneNumber_not: String
 
   """All values that are contained in given list."""
-  description_in: [String!]
+  phoneNumber_in: [String!]
 
   """All values that are not contained in given list."""
-  description_not_in: [String!]
+  phoneNumber_not_in: [String!]
 
   """All values less than the given value."""
-  description_lt: String
+  phoneNumber_lt: String
 
   """All values less than or equal the given value."""
-  description_lte: String
+  phoneNumber_lte: String
 
   """All values greater than the given value."""
-  description_gt: String
+  phoneNumber_gt: String
 
   """All values greater than or equal the given value."""
-  description_gte: String
+  phoneNumber_gte: String
 
   """All values containing the given string."""
-  description_contains: String
+  phoneNumber_contains: String
 
   """All values not containing the given string."""
-  description_not_contains: String
+  phoneNumber_not_contains: String
 
   """All values starting with the given string."""
-  description_starts_with: String
+  phoneNumber_starts_with: String
 
   """All values not starting with the given string."""
-  description_not_starts_with: String
+  phoneNumber_not_starts_with: String
 
   """All values ending with the given string."""
-  description_ends_with: String
+  phoneNumber_ends_with: String
 
   """All values not ending with the given string."""
-  description_not_ends_with: String
-  createdAt: DateTime
-
-  """All values that are not equal to given value."""
-  createdAt_not: DateTime
-
-  """All values that are contained in given list."""
-  createdAt_in: [DateTime!]
-
-  """All values that are not contained in given list."""
-  createdAt_not_in: [DateTime!]
-
-  """All values less than the given value."""
-  createdAt_lt: DateTime
-
-  """All values less than or equal the given value."""
-  createdAt_lte: DateTime
-
-  """All values greater than the given value."""
-  createdAt_gt: DateTime
-
-  """All values greater than or equal the given value."""
-  createdAt_gte: DateTime
-  imageUrl: String
-
-  """All values that are not equal to given value."""
-  imageUrl_not: String
-
-  """All values that are contained in given list."""
-  imageUrl_in: [String!]
-
-  """All values that are not contained in given list."""
-  imageUrl_not_in: [String!]
-
-  """All values less than the given value."""
-  imageUrl_lt: String
-
-  """All values less than or equal the given value."""
-  imageUrl_lte: String
-
-  """All values greater than the given value."""
-  imageUrl_gt: String
-
-  """All values greater than or equal the given value."""
-  imageUrl_gte: String
-
-  """All values containing the given string."""
-  imageUrl_contains: String
-
-  """All values not containing the given string."""
-  imageUrl_not_contains: String
-
-  """All values starting with the given string."""
-  imageUrl_starts_with: String
-
-  """All values not starting with the given string."""
-  imageUrl_not_starts_with: String
-
-  """All values ending with the given string."""
-  imageUrl_ends_with: String
-
-  """All values not ending with the given string."""
-  imageUrl_not_ends_with: String
-  author: UserFilter
+  phoneNumber_not_ends_with: String
+  orders_every: OrderFilter
+  orders_some: OrderFilter
+  orders_none: OrderFilter
 }
 
-enum PostOrderBy {
+enum CustomerOrderBy {
+  details_ASC
+  details_DESC
+  fullName_ASC
+  fullName_DESC
   id_ASC
   id_DESC
-  description_ASC
-  description_DESC
-  createdAt_ASC
-  createdAt_DESC
-  imageUrl_ASC
-  imageUrl_DESC
+  phoneNumber_ASC
+  phoneNumber_DESC
 }
 
-type Query {
-  viewer: Viewer!
-
-  """Fetches an object given its ID"""
-  node(
-    """The ID of an object"""
-    id: ID!
-  ): Node
+input CustomerordersOrder {
+  dueDate: DateTime!
+  state: OrderState!
+  pickupLocationId: ID
+  pickupLocation: OrderpickupLocationPickupLocation
+  historyIds: [ID!]
+  history: [OrderhistoryHistoryItem!]
+  itemsIds: [ID!]
+  items: [OrderitemsOrderItem!]
 }
 
-input SignupUserInput {
-  name: String
-  dateOfBirth: DateTime
-  postsIds: [ID!]
-  posts: [UserpostsPost!]
+scalar DateTime
+
+input DeleteCustomerInput {
+  id: ID!
   clientMutationId: String!
 }
 
-input UpdateOrCreatePostInput {
-  update: UpdatePost!
-  create: CreatePost!
-  clientMutationId: String!
-}
-
-type UpdateOrCreatePostPayload {
+type DeleteCustomerPayload {
   viewer: Viewer!
   clientMutationId: String!
-  post: Post
-  edge: PostEdge
-  author: User
+  customer: Customer
+  edge: CustomerEdge
+  deletedId: ID
 }
 
-input UpdateOrCreateUserInput {
-  update: UpdateUser!
-  create: CreateUser!
+input DeleteHistoryItemInput {
+  id: ID!
   clientMutationId: String!
 }
 
-type UpdateOrCreateUserPayload {
+type DeleteHistoryItemPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  historyItem: HistoryItem
+  edge: HistoryItemEdge
+  createdBy: User
+  order: Order
+  deletedId: ID
+}
+
+input DeleteOrderInput {
+  id: ID!
+  clientMutationId: String!
+}
+
+input DeleteOrderItemInput {
+  id: ID!
+  clientMutationId: String!
+}
+
+type DeleteOrderItemPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  orderItem: OrderItem
+  edge: OrderItemEdge
+  order: Order
+  product: Product
+  deletedId: ID
+}
+
+type DeleteOrderPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  order: Order
+  edge: OrderEdge
+  customer: Customer
+  pickupLocation: PickupLocation
+  deletedId: ID
+}
+
+input DeletePickupLocationInput {
+  id: ID!
+  clientMutationId: String!
+}
+
+type DeletePickupLocationPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  pickupLocation: PickupLocation
+  edge: PickupLocationEdge
+  deletedId: ID
+}
+
+input DeleteProductInput {
+  id: ID!
+  clientMutationId: String!
+}
+
+type DeleteProductPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  product: Product
+  edge: ProductEdge
+  deletedId: ID
+}
+
+input DeleteUserInput {
+  id: ID!
+  clientMutationId: String!
+}
+
+type DeleteUserPayload {
   viewer: Viewer!
   clientMutationId: String!
   user: User
   edge: UserEdge
+  deletedId: ID
 }
 
-input UpdatePost {
+type HistoryItem implements Node {
+  createdBy(filter: UserFilter): User!
   id: ID!
-  description: String
-  imageUrl: String
-  authorId: ID
-  author: PostauthorUser
-}
-
-input UpdatePostInput {
-  id: ID!
-  description: String
-  imageUrl: String
-  authorId: ID
-  author: PostauthorUser
-  clientMutationId: String!
-}
-
-type UpdatePostPayload {
-  viewer: Viewer!
-  clientMutationId: String!
-  post: Post
-  edge: PostEdge
-  author: User
-}
-
-input UpdateUser {
-  name: String
-  dateOfBirth: DateTime
-  id: ID!
-  postsIds: [ID!]
-  posts: [UserpostsPost!]
-}
-
-input UpdateUserInput {
-  name: String
-  dateOfBirth: DateTime
-  id: ID!
-  postsIds: [ID!]
-  posts: [UserpostsPost!]
-  clientMutationId: String!
-}
-
-type UpdateUserPayload {
-  viewer: Viewer!
-  clientMutationId: String!
-  user: User
-  edge: UserEdge
-}
-
-type User implements Node {
-  name: String
-  dateOfBirth: DateTime
-  id: ID!
-  posts(filter: PostFilter, orderBy: PostOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): PostConnection
+  message: String
+  newState: OrderState!
+  order(filter: OrderFilter): Order!
+  timestamp: DateTime!
 }
 
 """A connection to a list of items."""
-type UserConnection {
+type HistoryItemConnection {
   """Information to aid in pagination."""
   pageInfo: PageInfo!
 
   """A list of edges."""
-  edges: [UserEdge]
+  edges: [HistoryItemEdge]
+
+  """Count of filtered result set without considering pagination arguments"""
+  count: Int!
+}
+
+input HistoryItemcreatedByUser {
+  email: String!
+  firstName: String
+  lastName: String
+  locked: Boolean!
+  role: String!
+  historyItemsIds: [ID!]
+  historyItems: [UserhistoryItemsHistoryItem!]
+}
+
+"""An edge in a connection."""
+type HistoryItemEdge {
+  """The item at the end of the edge."""
+  node: HistoryItem!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+input HistoryItemFilter {
+  """Logical AND on all given filters."""
+  AND: [HistoryItemFilter!]
+
+  """Logical OR on all given filters."""
+  OR: [HistoryItemFilter!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  message: String
+
+  """All values that are not equal to given value."""
+  message_not: String
+
+  """All values that are contained in given list."""
+  message_in: [String!]
+
+  """All values that are not contained in given list."""
+  message_not_in: [String!]
+
+  """All values less than the given value."""
+  message_lt: String
+
+  """All values less than or equal the given value."""
+  message_lte: String
+
+  """All values greater than the given value."""
+  message_gt: String
+
+  """All values greater than or equal the given value."""
+  message_gte: String
+
+  """All values containing the given string."""
+  message_contains: String
+
+  """All values not containing the given string."""
+  message_not_contains: String
+
+  """All values starting with the given string."""
+  message_starts_with: String
+
+  """All values not starting with the given string."""
+  message_not_starts_with: String
+
+  """All values ending with the given string."""
+  message_ends_with: String
+
+  """All values not ending with the given string."""
+  message_not_ends_with: String
+  newState: OrderState
+
+  """All values that are not equal to given value."""
+  newState_not: OrderState
+
+  """All values that are contained in given list."""
+  newState_in: [OrderState!]
+
+  """All values that are not contained in given list."""
+  newState_not_in: [OrderState!]
+  timestamp: DateTime
+
+  """All values that are not equal to given value."""
+  timestamp_not: DateTime
+
+  """All values that are contained in given list."""
+  timestamp_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  timestamp_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  timestamp_lt: DateTime
+
+  """All values less than or equal the given value."""
+  timestamp_lte: DateTime
+
+  """All values greater than the given value."""
+  timestamp_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  timestamp_gte: DateTime
+  createdBy: UserFilter
+  order: OrderFilter
+}
+
+enum HistoryItemOrderBy {
+  id_ASC
+  id_DESC
+  message_ASC
+  message_DESC
+  newState_ASC
+  newState_DESC
+  timestamp_ASC
+  timestamp_DESC
+}
+
+input HistoryItemorderOrder {
+  dueDate: DateTime!
+  state: OrderState!
+  customerId: ID
+  customer: OrdercustomerCustomer
+  pickupLocationId: ID
+  pickupLocation: OrderpickupLocationPickupLocation
+  historyIds: [ID!]
+  history: [OrderhistoryHistoryItem!]
+  itemsIds: [ID!]
+  items: [OrderitemsOrderItem!]
+}
+
+type Mutation {
+  createOrder(input: CreateOrderInput!): CreateOrderPayload
+  createCustomer(input: CreateCustomerInput!): CreateCustomerPayload
+  createHistoryItem(input: CreateHistoryItemInput!): CreateHistoryItemPayload
+  createOrderItem(input: CreateOrderItemInput!): CreateOrderItemPayload
+  createProduct(input: CreateProductInput!): CreateProductPayload
+  createPickupLocation(input: CreatePickupLocationInput!): CreatePickupLocationPayload
+  updateOrder(input: UpdateOrderInput!): UpdateOrderPayload
+  updateCustomer(input: UpdateCustomerInput!): UpdateCustomerPayload
+  updateHistoryItem(input: UpdateHistoryItemInput!): UpdateHistoryItemPayload
+  updateUser(input: UpdateUserInput!): UpdateUserPayload
+  updateOrderItem(input: UpdateOrderItemInput!): UpdateOrderItemPayload
+  updateProduct(input: UpdateProductInput!): UpdateProductPayload
+  updatePickupLocation(input: UpdatePickupLocationInput!): UpdatePickupLocationPayload
+  updateOrCreateOrder(input: UpdateOrCreateOrderInput!): UpdateOrCreateOrderPayload
+  updateOrCreateCustomer(input: UpdateOrCreateCustomerInput!): UpdateOrCreateCustomerPayload
+  updateOrCreateHistoryItem(input: UpdateOrCreateHistoryItemInput!): UpdateOrCreateHistoryItemPayload
+  updateOrCreateUser(input: UpdateOrCreateUserInput!): UpdateOrCreateUserPayload
+  updateOrCreateOrderItem(input: UpdateOrCreateOrderItemInput!): UpdateOrCreateOrderItemPayload
+  updateOrCreateProduct(input: UpdateOrCreateProductInput!): UpdateOrCreateProductPayload
+  updateOrCreatePickupLocation(input: UpdateOrCreatePickupLocationInput!): UpdateOrCreatePickupLocationPayload
+  deleteOrder(input: DeleteOrderInput!): DeleteOrderPayload
+  deleteCustomer(input: DeleteCustomerInput!): DeleteCustomerPayload
+  deleteHistoryItem(input: DeleteHistoryItemInput!): DeleteHistoryItemPayload
+  deleteUser(input: DeleteUserInput!): DeleteUserPayload
+  deleteOrderItem(input: DeleteOrderItemInput!): DeleteOrderItemPayload
+  deleteProduct(input: DeleteProductInput!): DeleteProductPayload
+  deletePickupLocation(input: DeletePickupLocationInput!): DeletePickupLocationPayload
+  addToOrderPickupLocation(input: AddToOrderPickupLocationOrderInput!): AddToOrderPickupLocationPayload
+  addToCustomerOrders(input: AddToCustomerOrdersOrderInput!): AddToCustomerOrdersPayload
+  addToProductOrderItems(input: AddToProductOrderItemsOrderItemInput!): AddToProductOrderItemsPayload
+  addToOrderItems(input: AddToOrderItemsOrderInput!): AddToOrderItemsPayload
+  addToUserHistoryItems(input: AddToUserHistoryItemsHistoryItemInput!): AddToUserHistoryItemsPayload
+  addToOrderHistoryItems(input: AddToOrderHistoryItemsOrderInput!): AddToOrderHistoryItemsPayload
+  createUser(input: SignupUserInput!): CreateUserPayload!
+}
+
+"""An object with an ID"""
+interface Node {
+  """The id of the object."""
+  id: ID!
+}
+
+type Order implements Node {
+  customer(filter: CustomerFilter): Customer!
+  dueDate: DateTime!
+  history(filter: HistoryItemFilter, orderBy: HistoryItemOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): HistoryItemConnection
+  id: ID!
+  items(filter: OrderItemFilter, orderBy: OrderItemOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): OrderItemConnection
+  pickupLocation(filter: PickupLocationFilter): PickupLocation!
+  state: OrderState!
+}
+
+"""A connection to a list of items."""
+type OrderConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [OrderEdge]
+
+  """Count of filtered result set without considering pagination arguments"""
+  count: Int!
+}
+
+input OrdercustomerCustomer {
+  details: String
+  fullName: String!
+  phoneNumber: String
+  ordersIds: [ID!]
+  orders: [CustomerordersOrder!]
+}
+
+"""An edge in a connection."""
+type OrderEdge {
+  """The item at the end of the edge."""
+  node: Order!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+input OrderFilter {
+  """Logical AND on all given filters."""
+  AND: [OrderFilter!]
+
+  """Logical OR on all given filters."""
+  OR: [OrderFilter!]
+  dueDate: DateTime
+
+  """All values that are not equal to given value."""
+  dueDate_not: DateTime
+
+  """All values that are contained in given list."""
+  dueDate_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  dueDate_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  dueDate_lt: DateTime
+
+  """All values less than or equal the given value."""
+  dueDate_lte: DateTime
+
+  """All values greater than the given value."""
+  dueDate_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  dueDate_gte: DateTime
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  state: OrderState
+
+  """All values that are not equal to given value."""
+  state_not: OrderState
+
+  """All values that are contained in given list."""
+  state_in: [OrderState!]
+
+  """All values that are not contained in given list."""
+  state_not_in: [OrderState!]
+  customer: CustomerFilter
+  history_every: HistoryItemFilter
+  history_some: HistoryItemFilter
+  history_none: HistoryItemFilter
+  items_every: OrderItemFilter
+  items_some: OrderItemFilter
+  items_none: OrderItemFilter
+  pickupLocation: PickupLocationFilter
+}
+
+input OrderhistoryHistoryItem {
+  message: String
+  newState: OrderState!
+  timestamp: DateTime!
+  createdById: ID
+  createdBy: HistoryItemcreatedByUser
+}
+
+type OrderItem implements Node {
+  comment: String
+  id: ID!
+  order(filter: OrderFilter): Order!
+  product(filter: ProductFilter): Product!
+  quantity: Int!
+  totalPrice: Int!
+}
+
+"""A connection to a list of items."""
+type OrderItemConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [OrderItemEdge]
 
   """Count of filtered result set without considering pagination arguments"""
   count: Int!
 }
 
 """An edge in a connection."""
-type UserEdge {
+type OrderItemEdge {
   """The item at the end of the edge."""
-  node: User!
+  node: OrderItem!
 
   """A cursor for use in pagination."""
   cursor: String!
 }
 
-input UserFilter {
+input OrderItemFilter {
   """Logical AND on all given filters."""
-  AND: [UserFilter!]
+  AND: [OrderItemFilter!]
 
   """Logical OR on all given filters."""
-  OR: [UserFilter!]
+  OR: [OrderItemFilter!]
+  comment: String
+
+  """All values that are not equal to given value."""
+  comment_not: String
+
+  """All values that are contained in given list."""
+  comment_in: [String!]
+
+  """All values that are not contained in given list."""
+  comment_not_in: [String!]
+
+  """All values less than the given value."""
+  comment_lt: String
+
+  """All values less than or equal the given value."""
+  comment_lte: String
+
+  """All values greater than the given value."""
+  comment_gt: String
+
+  """All values greater than or equal the given value."""
+  comment_gte: String
+
+  """All values containing the given string."""
+  comment_contains: String
+
+  """All values not containing the given string."""
+  comment_not_contains: String
+
+  """All values starting with the given string."""
+  comment_starts_with: String
+
+  """All values not starting with the given string."""
+  comment_not_starts_with: String
+
+  """All values ending with the given string."""
+  comment_ends_with: String
+
+  """All values not ending with the given string."""
+  comment_not_ends_with: String
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  quantity: Int
+
+  """All values that are not equal to given value."""
+  quantity_not: Int
+
+  """All values that are contained in given list."""
+  quantity_in: [Int!]
+
+  """All values that are not contained in given list."""
+  quantity_not_in: [Int!]
+
+  """All values less than the given value."""
+  quantity_lt: Int
+
+  """All values less than or equal the given value."""
+  quantity_lte: Int
+
+  """All values greater than the given value."""
+  quantity_gt: Int
+
+  """All values greater than or equal the given value."""
+  quantity_gte: Int
+  totalPrice: Int
+
+  """All values that are not equal to given value."""
+  totalPrice_not: Int
+
+  """All values that are contained in given list."""
+  totalPrice_in: [Int!]
+
+  """All values that are not contained in given list."""
+  totalPrice_not_in: [Int!]
+
+  """All values less than the given value."""
+  totalPrice_lt: Int
+
+  """All values less than or equal the given value."""
+  totalPrice_lte: Int
+
+  """All values greater than the given value."""
+  totalPrice_gt: Int
+
+  """All values greater than or equal the given value."""
+  totalPrice_gte: Int
+  order: OrderFilter
+  product: ProductFilter
+}
+
+enum OrderItemOrderBy {
+  comment_ASC
+  comment_DESC
+  id_ASC
+  id_DESC
+  quantity_ASC
+  quantity_DESC
+  totalPrice_ASC
+  totalPrice_DESC
+}
+
+input OrderItemorderOrder {
+  dueDate: DateTime!
+  state: OrderState!
+  customerId: ID
+  customer: OrdercustomerCustomer
+  pickupLocationId: ID
+  pickupLocation: OrderpickupLocationPickupLocation
+  historyIds: [ID!]
+  history: [OrderhistoryHistoryItem!]
+  itemsIds: [ID!]
+  items: [OrderitemsOrderItem!]
+}
+
+input OrderItemproductProduct {
+  name: String!
+  price: Int!
+  orderItemsIds: [ID!]
+  orderItems: [ProductorderItemsOrderItem!]
+}
+
+input OrderitemsOrderItem {
+  comment: String
+  quantity: Int!
+  totalPrice: Int!
+  productId: ID
+  product: OrderItemproductProduct
+}
+
+enum OrderOrderBy {
+  dueDate_ASC
+  dueDate_DESC
+  id_ASC
+  id_DESC
+  state_ASC
+  state_DESC
+}
+
+input OrderpickupLocationPickupLocation {
+  name: String!
+  ordersIds: [ID!]
+  orders: [PickupLocationordersOrder!]
+}
+
+enum OrderState {
+  CANCELLED
+  CONFIRMED
+  DELIVERED
+  NEW
+  PROBLEM
+  READY
+}
+
+"""Information about pagination in a connection."""
+type PageInfo {
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+}
+
+type PickupLocation implements Node {
+  id: ID!
+  name: String!
+  orders(filter: OrderFilter, orderBy: OrderOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): OrderConnection
+}
+
+"""A connection to a list of items."""
+type PickupLocationConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [PickupLocationEdge]
+
+  """Count of filtered result set without considering pagination arguments"""
+  count: Int!
+}
+
+"""An edge in a connection."""
+type PickupLocationEdge {
+  """The item at the end of the edge."""
+  node: PickupLocation!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+input PickupLocationFilter {
+  """Logical AND on all given filters."""
+  AND: [PickupLocationFilter!]
+
+  """Logical OR on all given filters."""
+  OR: [PickupLocationFilter!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
   name: String
 
   """All values that are not equal to given value."""
@@ -483,28 +1312,63 @@ input UserFilter {
 
   """All values not ending with the given string."""
   name_not_ends_with: String
-  dateOfBirth: DateTime
+  orders_every: OrderFilter
+  orders_some: OrderFilter
+  orders_none: OrderFilter
+}
 
-  """All values that are not equal to given value."""
-  dateOfBirth_not: DateTime
+enum PickupLocationOrderBy {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+}
 
-  """All values that are contained in given list."""
-  dateOfBirth_in: [DateTime!]
+input PickupLocationordersOrder {
+  dueDate: DateTime!
+  state: OrderState!
+  customerId: ID
+  customer: OrdercustomerCustomer
+  historyIds: [ID!]
+  history: [OrderhistoryHistoryItem!]
+  itemsIds: [ID!]
+  items: [OrderitemsOrderItem!]
+}
 
-  """All values that are not contained in given list."""
-  dateOfBirth_not_in: [DateTime!]
+type Product implements Node {
+  id: ID!
+  name: String!
+  orderItems(filter: OrderItemFilter, orderBy: OrderItemOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): OrderItemConnection
+  price: Int!
+}
 
-  """All values less than the given value."""
-  dateOfBirth_lt: DateTime
+"""A connection to a list of items."""
+type ProductConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
 
-  """All values less than or equal the given value."""
-  dateOfBirth_lte: DateTime
+  """A list of edges."""
+  edges: [ProductEdge]
 
-  """All values greater than the given value."""
-  dateOfBirth_gt: DateTime
+  """Count of filtered result set without considering pagination arguments"""
+  count: Int!
+}
 
-  """All values greater than or equal the given value."""
-  dateOfBirth_gte: DateTime
+"""An edge in a connection."""
+type ProductEdge {
+  """The item at the end of the edge."""
+  node: Product!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+input ProductFilter {
+  """Logical AND on all given filters."""
+  AND: [ProductFilter!]
+
+  """Logical OR on all given filters."""
+  OR: [ProductFilter!]
   id: ID
 
   """All values that are not equal to given value."""
@@ -545,31 +1409,697 @@ input UserFilter {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
-  posts_every: PostFilter
-  posts_some: PostFilter
-  posts_none: PostFilter
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  price: Int
+
+  """All values that are not equal to given value."""
+  price_not: Int
+
+  """All values that are contained in given list."""
+  price_in: [Int!]
+
+  """All values that are not contained in given list."""
+  price_not_in: [Int!]
+
+  """All values less than the given value."""
+  price_lt: Int
+
+  """All values less than or equal the given value."""
+  price_lte: Int
+
+  """All values greater than the given value."""
+  price_gt: Int
+
+  """All values greater than or equal the given value."""
+  price_gte: Int
+  orderItems_every: OrderItemFilter
+  orderItems_some: OrderItemFilter
+  orderItems_none: OrderItemFilter
+}
+
+enum ProductOrderBy {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  price_ASC
+  price_DESC
+}
+
+input ProductorderItemsOrderItem {
+  comment: String
+  quantity: Int!
+  totalPrice: Int!
+  orderId: ID
+  order: OrderItemorderOrder
+}
+
+type Query {
+  viewer: Viewer!
+
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+}
+
+input SignupUserInput {
+  email: String!
+  firstName: String
+  lastName: String
+  locked: Boolean!
+  role: String!
+  historyItemsIds: [ID!]
+  historyItems: [UserhistoryItemsHistoryItem!]
+  clientMutationId: String!
+}
+
+input UpdateCustomer {
+  details: String
+  fullName: String
+  id: ID!
+  phoneNumber: String
+  ordersIds: [ID!]
+  orders: [CustomerordersOrder!]
+}
+
+input UpdateCustomerInput {
+  details: String
+  fullName: String
+  id: ID!
+  phoneNumber: String
+  ordersIds: [ID!]
+  orders: [CustomerordersOrder!]
+  clientMutationId: String!
+}
+
+type UpdateCustomerPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  customer: Customer
+  edge: CustomerEdge
+}
+
+input UpdateHistoryItem {
+  id: ID!
+  message: String
+  newState: OrderState
+  timestamp: DateTime
+  createdById: ID
+  createdBy: HistoryItemcreatedByUser
+  orderId: ID
+  order: HistoryItemorderOrder
+}
+
+input UpdateHistoryItemInput {
+  id: ID!
+  message: String
+  newState: OrderState
+  timestamp: DateTime
+  createdById: ID
+  createdBy: HistoryItemcreatedByUser
+  orderId: ID
+  order: HistoryItemorderOrder
+  clientMutationId: String!
+}
+
+type UpdateHistoryItemPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  historyItem: HistoryItem
+  edge: HistoryItemEdge
+  createdBy: User
+  order: Order
+}
+
+input UpdateOrCreateCustomerInput {
+  update: UpdateCustomer!
+  create: CreateCustomer!
+  clientMutationId: String!
+}
+
+type UpdateOrCreateCustomerPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  customer: Customer
+  edge: CustomerEdge
+}
+
+input UpdateOrCreateHistoryItemInput {
+  update: UpdateHistoryItem!
+  create: CreateHistoryItem!
+  clientMutationId: String!
+}
+
+type UpdateOrCreateHistoryItemPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  historyItem: HistoryItem
+  edge: HistoryItemEdge
+  createdBy: User
+  order: Order
+}
+
+input UpdateOrCreateOrderInput {
+  update: UpdateOrder!
+  create: CreateOrder!
+  clientMutationId: String!
+}
+
+input UpdateOrCreateOrderItemInput {
+  update: UpdateOrderItem!
+  create: CreateOrderItem!
+  clientMutationId: String!
+}
+
+type UpdateOrCreateOrderItemPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  orderItem: OrderItem
+  edge: OrderItemEdge
+  order: Order
+  product: Product
+}
+
+type UpdateOrCreateOrderPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  order: Order
+  edge: OrderEdge
+  customer: Customer
+  pickupLocation: PickupLocation
+}
+
+input UpdateOrCreatePickupLocationInput {
+  update: UpdatePickupLocation!
+  create: CreatePickupLocation!
+  clientMutationId: String!
+}
+
+type UpdateOrCreatePickupLocationPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  pickupLocation: PickupLocation
+  edge: PickupLocationEdge
+}
+
+input UpdateOrCreateProductInput {
+  update: UpdateProduct!
+  create: CreateProduct!
+  clientMutationId: String!
+}
+
+type UpdateOrCreateProductPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  product: Product
+  edge: ProductEdge
+}
+
+input UpdateOrCreateUserInput {
+  update: UpdateUser!
+  create: CreateUser!
+  clientMutationId: String!
+}
+
+type UpdateOrCreateUserPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  user: User
+  edge: UserEdge
+}
+
+input UpdateOrder {
+  dueDate: DateTime
+  id: ID!
+  state: OrderState
+  customerId: ID
+  customer: OrdercustomerCustomer
+  pickupLocationId: ID
+  pickupLocation: OrderpickupLocationPickupLocation
+  historyIds: [ID!]
+  history: [OrderhistoryHistoryItem!]
+  itemsIds: [ID!]
+  items: [OrderitemsOrderItem!]
+}
+
+input UpdateOrderInput {
+  dueDate: DateTime
+  id: ID!
+  state: OrderState
+  customerId: ID
+  customer: OrdercustomerCustomer
+  pickupLocationId: ID
+  pickupLocation: OrderpickupLocationPickupLocation
+  historyIds: [ID!]
+  history: [OrderhistoryHistoryItem!]
+  itemsIds: [ID!]
+  items: [OrderitemsOrderItem!]
+  clientMutationId: String!
+}
+
+input UpdateOrderItem {
+  comment: String
+  id: ID!
+  quantity: Int
+  totalPrice: Int
+  orderId: ID
+  order: OrderItemorderOrder
+  productId: ID
+  product: OrderItemproductProduct
+}
+
+input UpdateOrderItemInput {
+  comment: String
+  id: ID!
+  quantity: Int
+  totalPrice: Int
+  orderId: ID
+  order: OrderItemorderOrder
+  productId: ID
+  product: OrderItemproductProduct
+  clientMutationId: String!
+}
+
+type UpdateOrderItemPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  orderItem: OrderItem
+  edge: OrderItemEdge
+  order: Order
+  product: Product
+}
+
+type UpdateOrderPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  order: Order
+  edge: OrderEdge
+  customer: Customer
+  pickupLocation: PickupLocation
+}
+
+input UpdatePickupLocation {
+  id: ID!
+  name: String
+  ordersIds: [ID!]
+  orders: [PickupLocationordersOrder!]
+}
+
+input UpdatePickupLocationInput {
+  id: ID!
+  name: String
+  ordersIds: [ID!]
+  orders: [PickupLocationordersOrder!]
+  clientMutationId: String!
+}
+
+type UpdatePickupLocationPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  pickupLocation: PickupLocation
+  edge: PickupLocationEdge
+}
+
+input UpdateProduct {
+  id: ID!
+  name: String
+  price: Int
+  orderItemsIds: [ID!]
+  orderItems: [ProductorderItemsOrderItem!]
+}
+
+input UpdateProductInput {
+  id: ID!
+  name: String
+  price: Int
+  orderItemsIds: [ID!]
+  orderItems: [ProductorderItemsOrderItem!]
+  clientMutationId: String!
+}
+
+type UpdateProductPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  product: Product
+  edge: ProductEdge
+}
+
+input UpdateUser {
+  email: String
+  firstName: String
+  id: ID!
+  lastName: String
+  locked: Boolean
+  role: String
+  historyItemsIds: [ID!]
+  historyItems: [UserhistoryItemsHistoryItem!]
+}
+
+input UpdateUserInput {
+  email: String
+  firstName: String
+  id: ID!
+  lastName: String
+  locked: Boolean
+  role: String
+  historyItemsIds: [ID!]
+  historyItems: [UserhistoryItemsHistoryItem!]
+  clientMutationId: String!
+}
+
+type UpdateUserPayload {
+  viewer: Viewer!
+  clientMutationId: String!
+  user: User
+  edge: UserEdge
+}
+
+type User implements Node {
+  email: String!
+  firstName: String
+  historyItems(filter: HistoryItemFilter, orderBy: HistoryItemOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): HistoryItemConnection
+  id: ID!
+  lastName: String
+  locked: Boolean!
+  role: String!
+}
+
+"""A connection to a list of items."""
+type UserConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [UserEdge]
+
+  """Count of filtered result set without considering pagination arguments"""
+  count: Int!
+}
+
+"""An edge in a connection."""
+type UserEdge {
+  """The item at the end of the edge."""
+  node: User!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+input UserFilter {
+  """Logical AND on all given filters."""
+  AND: [UserFilter!]
+
+  """Logical OR on all given filters."""
+  OR: [UserFilter!]
+  email: String
+
+  """All values that are not equal to given value."""
+  email_not: String
+
+  """All values that are contained in given list."""
+  email_in: [String!]
+
+  """All values that are not contained in given list."""
+  email_not_in: [String!]
+
+  """All values less than the given value."""
+  email_lt: String
+
+  """All values less than or equal the given value."""
+  email_lte: String
+
+  """All values greater than the given value."""
+  email_gt: String
+
+  """All values greater than or equal the given value."""
+  email_gte: String
+
+  """All values containing the given string."""
+  email_contains: String
+
+  """All values not containing the given string."""
+  email_not_contains: String
+
+  """All values starting with the given string."""
+  email_starts_with: String
+
+  """All values not starting with the given string."""
+  email_not_starts_with: String
+
+  """All values ending with the given string."""
+  email_ends_with: String
+
+  """All values not ending with the given string."""
+  email_not_ends_with: String
+  firstName: String
+
+  """All values that are not equal to given value."""
+  firstName_not: String
+
+  """All values that are contained in given list."""
+  firstName_in: [String!]
+
+  """All values that are not contained in given list."""
+  firstName_not_in: [String!]
+
+  """All values less than the given value."""
+  firstName_lt: String
+
+  """All values less than or equal the given value."""
+  firstName_lte: String
+
+  """All values greater than the given value."""
+  firstName_gt: String
+
+  """All values greater than or equal the given value."""
+  firstName_gte: String
+
+  """All values containing the given string."""
+  firstName_contains: String
+
+  """All values not containing the given string."""
+  firstName_not_contains: String
+
+  """All values starting with the given string."""
+  firstName_starts_with: String
+
+  """All values not starting with the given string."""
+  firstName_not_starts_with: String
+
+  """All values ending with the given string."""
+  firstName_ends_with: String
+
+  """All values not ending with the given string."""
+  firstName_not_ends_with: String
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  lastName: String
+
+  """All values that are not equal to given value."""
+  lastName_not: String
+
+  """All values that are contained in given list."""
+  lastName_in: [String!]
+
+  """All values that are not contained in given list."""
+  lastName_not_in: [String!]
+
+  """All values less than the given value."""
+  lastName_lt: String
+
+  """All values less than or equal the given value."""
+  lastName_lte: String
+
+  """All values greater than the given value."""
+  lastName_gt: String
+
+  """All values greater than or equal the given value."""
+  lastName_gte: String
+
+  """All values containing the given string."""
+  lastName_contains: String
+
+  """All values not containing the given string."""
+  lastName_not_contains: String
+
+  """All values starting with the given string."""
+  lastName_starts_with: String
+
+  """All values not starting with the given string."""
+  lastName_not_starts_with: String
+
+  """All values ending with the given string."""
+  lastName_ends_with: String
+
+  """All values not ending with the given string."""
+  lastName_not_ends_with: String
+  locked: Boolean
+
+  """All values that are not equal to given value."""
+  locked_not: Boolean
+  role: String
+
+  """All values that are not equal to given value."""
+  role_not: String
+
+  """All values that are contained in given list."""
+  role_in: [String!]
+
+  """All values that are not contained in given list."""
+  role_not_in: [String!]
+
+  """All values less than the given value."""
+  role_lt: String
+
+  """All values less than or equal the given value."""
+  role_lte: String
+
+  """All values greater than the given value."""
+  role_gt: String
+
+  """All values greater than or equal the given value."""
+  role_gte: String
+
+  """All values containing the given string."""
+  role_contains: String
+
+  """All values not containing the given string."""
+  role_not_contains: String
+
+  """All values starting with the given string."""
+  role_starts_with: String
+
+  """All values not starting with the given string."""
+  role_not_starts_with: String
+
+  """All values ending with the given string."""
+  role_ends_with: String
+
+  """All values not ending with the given string."""
+  role_not_ends_with: String
+  historyItems_every: HistoryItemFilter
+  historyItems_some: HistoryItemFilter
+  historyItems_none: HistoryItemFilter
+}
+
+input UserhistoryItemsHistoryItem {
+  message: String
+  newState: OrderState!
+  timestamp: DateTime!
+  orderId: ID
+  order: HistoryItemorderOrder
 }
 
 enum UserOrderBy {
-  name_ASC
-  name_DESC
-  dateOfBirth_ASC
-  dateOfBirth_DESC
+  email_ASC
+  email_DESC
+  firstName_ASC
+  firstName_DESC
   id_ASC
   id_DESC
-}
-
-input UserpostsPost {
-  description: String
-  imageUrl: String
+  lastName_ASC
+  lastName_DESC
+  locked_ASC
+  locked_DESC
+  role_ASC
+  role_DESC
 }
 
 """This is the famous Relay viewer object"""
 type Viewer {
-  allPosts(filter: PostFilter, orderBy: PostOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): PostConnection!
+  allOrders(filter: OrderFilter, orderBy: OrderOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): OrderConnection!
+  allCustomers(filter: CustomerFilter, orderBy: CustomerOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): CustomerConnection!
+  allHistoryItems(filter: HistoryItemFilter, orderBy: HistoryItemOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): HistoryItemConnection!
   allUsers(filter: UserFilter, orderBy: UserOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  allOrderItems(filter: OrderItemFilter, orderBy: OrderItemOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): OrderItemConnection!
+  allProducts(filter: ProductFilter, orderBy: ProductOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): ProductConnection!
+  allPickupLocations(filter: PickupLocationFilter, orderBy: PickupLocationOrderBy, skip: Int, after: String, before: String, first: Int, last: Int): PickupLocationConnection!
   user: User
-  Post(id: ID): Post
+  Order(id: ID): Order
+  Customer(id: ID): Customer
+  HistoryItem(id: ID): HistoryItem
   User(id: ID): User
+  OrderItem(id: ID): OrderItem
+  Product(id: ID): Product
+  PickupLocation(id: ID): PickupLocation
   id: ID!
 }
