@@ -3,6 +3,7 @@ import {
   QueryRenderer,
   graphql
 } from 'react-relay'
+import startOfToday from 'date-fns/start_of_today'
 import environment from '../relay-env'
 import StorefrontPage from './StorefrontPage'
 
@@ -17,7 +18,7 @@ const HomeQuery = graphql`
 class Home extends Component {
   render() {
     const filter = {
-      dueDate_gte: new Date().toISOString()
+      dueDate_gte: startOfToday().toISOString()
     };
 
     return (
