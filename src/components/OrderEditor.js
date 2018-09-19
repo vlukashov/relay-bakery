@@ -43,6 +43,7 @@ class OrderEditor extends React.Component {
 
     const order = {
       dueDate: form.dueDate,
+      state: 'NEW',
       customer: {
         fullName: form.customer,
         phoneNumber: form.phoneNumber,
@@ -53,7 +54,8 @@ class OrderEditor extends React.Component {
         {
           productId: form.product,
           quantity: form.quantity | 0,
-          comment: form.comment
+          comment: form.comment,
+          totalPrice: 0
         }
       ]
     };

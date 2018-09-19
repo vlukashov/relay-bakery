@@ -28,21 +28,8 @@ function createOrder(environment, viewerId, order) {
       mutation,
       variables: {
         input: {
-          clientMutationId: mutationId,
-          dueDate: order.dueDate,
-          state: 'NEW',
-          customer: {
-            fullName: order.customer.fullName,
-            phoneNumber: order.customer.phoneNumber,
-            details: order.customer.details
-          },
-          pickupLocationId: order.pickupLocationId,
-          items: order.items.map(item => ({
-            productId: item.productId,
-            quantity: item.quantity,
-            comment: item.comment,
-            totalPrice: 0
-          })),
+          ...order,
+          clientMutationId: mutationId
         }
       },
       optimisticResponse: {
@@ -50,7 +37,7 @@ function createOrder(environment, viewerId, order) {
           edge: {
             node: {
               id: `${mutationId}:Order`,
-              state: 'NEW',
+              state: order.state,
               dueDate: order.dueDate,
               customer: {
                 fullName: order.customer.fullName + ' (optimistic)',
@@ -67,7 +54,7 @@ function createOrder(environment, viewerId, order) {
                       id: `${mutationId}:OrderItem:${i}`,
                       quantity: item.quantity,
                       comment: item.comment,
-                      totalPrice: 0,
+                      totalPrice: item.totalPrice,
                       product: {
                         id: item.productId
                       }
