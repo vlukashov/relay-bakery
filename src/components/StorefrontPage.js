@@ -10,6 +10,10 @@ import OrderList from './OrderList';
 class StorefrontPage extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      searchString: '',
+      showPastOrders: false
+    };
     this._onFilterChanged = debounce(this._onFilterChanged.bind(this), 300);
   }
 
@@ -17,27 +21,55 @@ class StorefrontPage extends React.Component {
     return (
       <div className="StorefrontPage">
         <div>
-          <label>
-            Filter
-            <input type="text" onChange={(e) => this._onFilterChanged(e.target.value)} />
+          <label>Search
+            <input type="text" placeholder="Search"
+              onChange={(e) => this._onSearchStringChanged(e.target.value)} />
           </label>
+          <label>Show past orders
+            <input type="checkbox"
+              onChange={(e) => this._onShowPastOrdersChanged(e.target.checked)}/>
+          </label>
+          <button onClick={() => this._onNewOrder()}>New Order</button>
         </div>
         <OrderList viewer={this.props.viewer}/>
       </div>
     )
   }
 
-  _onFilterChanged(filterString) {
+  _onFilterChanged() {
+    const {searchString, showPastOrders} = this.state;
     this.props.relay.refetch(fragmentVariables => {
-      return {
-        filter: {
-          ...fragmentVariables.filter,
-          customer: {
-            fullName_contains: filterString
-          }
+      const filter = {
+        ...fragmentVariables.filter,
+        customer: {
+          fullName_contains: searchString
         }
       };
+      if (showPastOrders) {
+        delete filter.dueDate_gte;
+      }
+      return {filter};
     });
+  }
+
+  _onSearchStringChanged(searchString) {
+    this.setState({
+      ...this.state,
+      searchString
+    });
+    this._onFilterChanged();
+  }
+
+  _onShowPastOrdersChanged(showPastOrders) {
+    this.setState({
+      ...this.state,
+      showPastOrders
+    });
+    this._onFilterChanged();
+  }
+
+  _onNewOrder() {
+    console.log('new order');
   }
 }
 

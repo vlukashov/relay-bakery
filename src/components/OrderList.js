@@ -36,8 +36,8 @@ class OrderList extends React.Component {
 export default createPaginationContainer(OrderList,
   graphql`
     fragment OrderList_viewer on Viewer @argumentDefinitions(
-      count: {type: "Int", defaultValue: 10},
-      cursor: {type: "String", defaultValue: null},
+      count: {type: "Int", defaultValue: 20},
+      cursor: {type: "String"},
       filter: {type: "OrderFilter"}
     ) {
       allOrders(
