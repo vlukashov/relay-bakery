@@ -6,15 +6,19 @@ import {
 import debounce from 'lodash/debounce';
 
 import OrderList from './OrderList';
+import OrderEditor from './OrderEditor';
 
 class StorefrontPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       searchString: '',
-      showPastOrders: false
+      showPastOrders: false,
+      openedOrder: undefined
     };
     this._onFilterChanged = debounce(this._onFilterChanged.bind(this), 300);
+    this._onNewOrderClicked = this._onNewOrderClicked.bind(this);
+    this._onOrderEditorClosed = this._onOrderEditorClosed.bind(this);
   }
 
   render() {
@@ -29,8 +33,14 @@ class StorefrontPage extends React.Component {
             <input type="checkbox"
               onChange={(e) => this._onShowPastOrdersChanged(e.target.checked)}/>
           </label>
-          <button onClick={() => this._onNewOrder()}>New Order</button>
+          <button onClick={this._onNewOrderClicked}>New Order</button>
         </div>
+        {this.state.openedOrder
+          ? <OrderEditor viewer={this.props.viewer}
+                         order={this.state.openedOrder}
+                         onClosed={this._onOrderEditorClosed}/>
+          : ''
+        }
         <OrderList viewer={this.props.viewer}/>
       </div>
     )
@@ -53,23 +63,21 @@ class StorefrontPage extends React.Component {
   }
 
   _onSearchStringChanged(searchString) {
-    this.setState({
-      ...this.state,
-      searchString
-    });
+    this.setState({searchString});
     this._onFilterChanged();
   }
 
   _onShowPastOrdersChanged(showPastOrders) {
-    this.setState({
-      ...this.state,
-      showPastOrders
-    });
+    this.setState({showPastOrders});
     this._onFilterChanged();
   }
 
-  _onNewOrder() {
-    console.log('new order');
+  _onNewOrderClicked() {
+    this.setState({openedOrder: {}});
+  }
+
+  _onOrderEditorClosed() {
+    this.setState({openedOrder: undefined});
   }
 }
 
@@ -78,6 +86,7 @@ export default createRefetchContainer(StorefrontPage,
     fragment StorefrontPage_viewer on Viewer @argumentDefinitions(
       filter: {type: "OrderFilter"}
     ) {
+      ...OrderEditor_viewer,
       ...OrderList_viewer @arguments(filter: $filter)
     }
   `,

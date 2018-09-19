@@ -7504,7 +7504,7 @@ relay-compiler@^1.6.2:
     signedsource "^1.0.0"
     yargs "^9.0.0"
 
-relay-runtime@1.6.2:
+relay-runtime@1.6.2, relay-runtime@^1.6.2:
   version "1.6.2"
   resolved "https://registry.yarnpkg.com/relay-runtime/-/relay-runtime-1.6.2.tgz#5ecd43d92799e761454200b455dd1c0cb0259659"
   dependencies:
