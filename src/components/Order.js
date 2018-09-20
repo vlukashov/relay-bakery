@@ -32,7 +32,12 @@ class Order extends React.Component {
           <div className="name-items">
             <h3 className="name">{order.customer.fullName}</h3>
             <div className="goods">
-            {order.items.edges.map(({node}) =>
+            {/*
+                `order.items` can be undefined if this is an order recieved
+                through a subscription. Graphcool subscriptions do not support
+                Relay.
+            */}
+            {order.items && order.items.edges.map(({node}) =>
               <div className="goods-item" key={node.id}>
                 <span className="count">{node.quantity}</span>
                 <div>{node.product.name}</div>

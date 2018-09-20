@@ -5,6 +5,10 @@ import {
 } from 'relay-runtime';
 
 import {
+  SubscriptionClient
+} from 'subscriptions-transport-ws';
+
+import {
   RelayNetworkLayer,
   urlMiddleware,
   loggerMiddleware,
@@ -39,7 +43,23 @@ const network = new RelayNetworkLayer(
         console.log('Downloaded: ' + current + ' B, total: ' + total + ' B');
       },
     }),
-  ]
+  ], {
+    subscribeFn: (config, variables, cacheConfig, observer) => {
+      const query = config.text;
+
+      const subscriptionClient = new SubscriptionClient(
+        'ws://localhost:60000/subscriptions/v1/cjm0jfuyj000401527ycvcx3n', {
+          reconnect: true
+        });
+      const { unsubscribe } = subscriptionClient.request({query, variables})
+        .subscribe({
+          next: (response) => { observer.onNext(response) },
+          error: (error) => { observer.onError(error) },
+          complete: () => { observer.onCompleted() }
+        });
+      return { dispose: unsubscribe };
+    }
+  }
 );
 
 const environment = new Environment({

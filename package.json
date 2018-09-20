@@ -51,6 +51,7 @@
     "relay-runtime": "^1.6.2",
     "resolve": "1.6.0",
     "style-loader": "0.19.0",
+    "subscriptions-transport-ws": "^0.9.15",
     "sw-precache-webpack-plugin": "0.11.4",
     "url-loader": "0.6.2",
     "webpack": "3.8.1",
@@ -67,7 +68,7 @@
     "graphcool:reset": "cd server && node -e \"(async () => {try {await require('./scripts/reset-db')();} catch (e) {console.log(e);}})();\"",
     "graphcool:generate": "cd server && node scripts/generate-data.js",
     "graphcool": "cd server && graphcool deploy",
-    "relay": "graphql get-schema -p relay-crud && relay-compiler --src ./src --schema ./schema.graphql --extensions js jsx"
+    "relay": "relay-compiler --src ./src --schema ./schema.graphql --extensions js jsx"
   },
   "jest": {
     "collectCoverageFrom": [

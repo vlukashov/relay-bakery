@@ -6,6 +6,7 @@ import {
 
 import Order from './Order';
 import InfiniteScrollPageLoader from './InfiniteScrollPageLoader';
+import requestOrdersSubscription from '../subscriptions/requestOrdersSubscription.js';
 
 class OrderList extends React.Component {
   render() {
@@ -17,6 +18,14 @@ class OrderList extends React.Component {
         <InfiniteScrollPageLoader onLoadMore={() => this._loadMore()}/>
       </div>
     )
+  }
+
+  componentDidMount() {
+    this._subscription = requestOrdersSubscription(this.props.relay.environment, this.props.viewer.id);
+  }
+
+  componentWillUnmount() {
+    this._subscription.dispose();
   }
 
   _loadMore() {
@@ -40,6 +49,7 @@ export default createPaginationContainer(OrderList,
       cursor: {type: "String"},
       filter: {type: "OrderFilter"}
     ) {
+      id,
       allOrders(
         first: $count,
         after: $cursor,

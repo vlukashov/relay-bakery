@@ -2103,3 +2103,144 @@ type Viewer {
   PickupLocation(id: ID): PickupLocation
   id: ID!
 }
+
+type Subscription {
+  Order(filter: OrderSubscriptionFilter): OrderSubscriptionPayload
+  # Customer(filter: CustomerSubscriptionFilter): CustomerSubscriptionPayload
+  # HistoryItem(filter: HistoryItemSubscriptionFilter): HistoryItemSubscriptionPayload
+  # User(filter: UserSubscriptionFilter): UserSubscriptionPayload
+  # OrderItem(filter: OrderItemSubscriptionFilter): OrderItemSubscriptionPayload
+  # Product(filter: ProductSubscriptionFilter): ProductSubscriptionPayload
+  # PickupLocation(filter: PickupLocationSubscriptionFilter): PickupLocationSubscriptionPayload
+}
+
+enum _ModelMutationType {
+  CREATED
+  UPDATED
+  DELETED
+}
+
+input OrderSubscriptionFilter {
+  """Logical AND on all given filters."""
+  AND: [OrderSubscriptionFilter!]
+
+  """Logical OR on all given filters."""
+  OR: [OrderSubscriptionFilter!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [_ModelMutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: OrderSubscriptionFilterNode
+}
+
+input OrderSubscriptionFilterNode {
+  dueDate: DateTime
+
+  """All values that are not equal to given value."""
+  dueDate_not: DateTime
+
+  """All values that are contained in given list."""
+  dueDate_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  dueDate_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  dueDate_lt: DateTime
+
+  """All values less than or equal the given value."""
+  dueDate_lte: DateTime
+
+  """All values greater than the given value."""
+  dueDate_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  dueDate_gte: DateTime
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  state: OrderState
+
+  """All values that are not equal to given value."""
+  state_not: OrderState
+
+  """All values that are contained in given list."""
+  state_in: [OrderState!]
+
+  """All values that are not contained in given list."""
+  state_not_in: [OrderState!]
+  customer: CustomerFilter
+  history_every: HistoryItemFilter
+  history_some: HistoryItemFilter
+  history_none: HistoryItemFilter
+  items_every: OrderItemFilter
+  items_some: OrderItemFilter
+  items_none: OrderItemFilter
+  pickupLocation: PickupLocationFilter
+}
+
+type OrderSubscriptionPayload {
+  mutation: _ModelMutationType!
+  node: Order
+  updatedFields: [String!]
+  previousValues: OrderPreviousValues
+}
+
+type OrderPreviousValues {
+  dueDate: DateTime!
+  id: ID!
+  state: OrderState!
+}
